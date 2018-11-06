@@ -6,12 +6,14 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>{{ title }}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
-            integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
-            crossorigin=""/>
-        <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
-            integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
-            crossorigin=""></script>
+        <link rel="stylesheet" href="{% static 'photomap/leaflet/leaflet.css' %}" />
+        <script src="{% static 'photomap/leaflet/leaflet.js' %}"></script>
+        <!-- <link rel="stylesheet" href="{% static 'photomap/font-awesome/font-awesome.min.css' %}" /> -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="{% static 'photomap/leaflet-locatecontrol/L.Control.Locate.min.css' %}" />
+        <script src="{% static 'photomap/leaflet-locatecontrol/L.Control.Locate.min.js' %}"></script>
+        <link rel="stylesheet" href="{% static 'photomap/leaflet-compass/leaflet-compass.min.css' %}" />
+        <script src="{% static 'photomap/leaflet-compass/leaflet-compass.min.js' %}"></script>
         <link rel="stylesheet" type="text/css" media="screen" href="{% static 'photomap/style.css' %}" />
     </head>
     <body>
