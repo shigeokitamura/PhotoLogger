@@ -9,7 +9,8 @@
         <link rel="stylesheet" href="{% static 'photomap/leaflet/leaflet.css' %}" />
         <script src="{% static 'photomap/leaflet/leaflet.js' %}"></script>
         <!-- <link rel="stylesheet" href="{% static 'photomap/font-awesome/font-awesome.min.css' %}" /> -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+        <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" /> -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
         <link rel="stylesheet" href="{% static 'photomap/leaflet-locatecontrol/L.Control.Locate.min.css' %}" />
         <script src="{% static 'photomap/leaflet-locatecontrol/L.Control.Locate.min.js' %}"></script>
         <link rel="stylesheet" href="{% static 'photomap/leaflet-compass/leaflet-compass.min.css' %}" />
@@ -18,11 +19,14 @@
     </head>
     <body>
         <div class="upper">
-                <video id="local_video" playsinline muted autoplay></video>
+            <video id="local_video" playsinline muted autoplay></video>
             <div class="select">
                 <label for="videoSource">Video source: </label>
                 <select id="videoSource"></select>
             </div>
+            <p id="lat"></p>
+            <p id="lng"></p>
+            <p id="dir"></p>
         </div>
         <div class="lower">
             <div id="map"></div>
