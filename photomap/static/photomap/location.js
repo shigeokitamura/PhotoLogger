@@ -11,11 +11,17 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 // Leaflet.Controlをmapに追加
-const lc = L.control.locate().addTo(map);
+const options = {
+    setView: 'always',
+    showCompass: false,
+    drawCircle: true,
+    drawMarker: true
+};
+const lc = L.control.locate(options).addTo(map);
 lc.start();
 
 // Leaflet.Control.Compassを追加
-map.addControl( new L.Control.Compass( {autoActive: true, showDigit:true} ) );
+// map.addControl( new L.Control.Compass( {autoActive: true, showDigit:true} ) );
 
 function onLocationFound(e) {
     const radius = e.accuracy / 2;
@@ -30,7 +36,6 @@ function onLocationError(e) {
 
 map.on('locationfound', onLocationFound);
 map.on('locationerror', onLocationError);
-map.on('compass:rotated', onRotated);
 
 function compassHeading(alpha, beta, gamma) {
     const degtorad = Math.PI / 180; // Degree-to-Radian conversion
