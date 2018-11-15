@@ -120,4 +120,4 @@ USE_TZ = True
 STATIC_URL = '/photologger/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/photologger/media/'
+MEDIA_URL = '/media/'

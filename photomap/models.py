@@ -1,9 +1,13 @@
 from django.db import models
+from django.utils import timezone
 
 # Create your models here.
 class Photo(models.Model):
-    longtitude = models.FloatField()
     latitude = models.FloatField()
-    direction = models.IntegerField()
+    longtitude = models.FloatField()
+    direction = models.IntegerField(default=-1)
     image = models.ImageField(upload_to='uploads/')
-    date = models.DateTimeField('date uploaded')
+    date = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return "lat: " + str(self.latitude) + ", lng: " + str(self.longtitude) + ", dir: " + str(self.direction)
