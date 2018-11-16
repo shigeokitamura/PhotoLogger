@@ -25,15 +25,14 @@
                 <select id="videoSource"></select>
             </div>
             <div class="camera_button">
-                <form action="{% url 'photomap:upload' %}" method="POST">
+                <form action="{% url 'photomap:upload' %}" method="POST" name="form_upload" enctype="multipart/form-data" style="display: none;">
                     {% csrf_token %}
                     {{ form.latitude }}
-                    {{ form.longtitude}}
+                    {{ form.longtitude }}
                     {{ form.direction }}
-                    {{ form.image }}
-                    <input id="button_send" type="button" value="送信" style="visibility: hidden;">
                 </form>
-                <!-- <button id="button_send"  style="visibility: hidden;" onclick="send()">送信</button> -->
+                
+                <button id="button_send"  style="visibility: hidden;" onclick="send()">送信</button>
                 <button id="button_capture" onclick="capture()">📷</button>
                 <button id="button_recap" style="visibility: hidden;" onclick="recap()">撮り直し</button>
             </div>

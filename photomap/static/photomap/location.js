@@ -4,6 +4,10 @@ const lat = document.getElementById("lat");
 const lng = document.getElementById("lng");
 const dir = document.getElementById("dir");
 
+const form_latitude = document.querySelector("#id_latitude");
+const form_longtitude = document.querySelector("#id_longtitude");
+const form_direction = document.querySelector("#id_direction");
+
 const map = L.map('map').setView([34.8780131, 135.5766528], 17);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -21,13 +25,16 @@ const lc = L.control.locate(options).addTo(map);
 lc.start();
 
 // Leaflet.Control.Compassを追加
-// map.addControl( new L.Control.Compass( {autoActive: true, showDigit:true} ) );
+map.addControl( new L.Control.Compass( {autoActive: true, showDigit: false} ) );
 
 function onLocationFound(e) {
     const radius = e.accuracy / 2;
     console.log(`lat: ${e.latlng.lat}, lng: ${e.latlng.lng}, accuracy: ${radius}`);
     lat.innerText = `緯度: ${e.latlng.lat}`;
     lng.innerText = `経度: ${e.latlng.lng}`;
+
+    form_latitude.value = e.latlng.lat;
+    form_longtitude.value = e.latlng.lng;
 }
 
 function onLocationError(e) {
@@ -71,4 +78,27 @@ function compassHeading(alpha, beta, gamma) {
 window.addEventListener('deviceorientation', event => {
     const heading = compassHeading(event.alpha, event.beta, event.gamma);
     dir.innerText = `方位: ${heading}`;
+    form_direction.value = heading;
 });
+
+function getJSON() {
+    const xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            const json = JSON.parse(xhr.responseText);
+            //console.log(json);
+            for (let item in json) {
+                const data = json[item].fields;
+                console.log(data);
+                const marker = L.marker([data.latitude, data.longtitude])
+                    .bindPopup(
+                        `<img src="media/${data.image}" width= ${window.innerWidth * 0.2} >`
+                    ).addTo(map);
+            }
+        }
+    }
+    xhr.open('GET', 'photos/');
+    xhr.send(null);
+}
+
+getJSON();

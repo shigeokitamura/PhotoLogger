@@ -1,8 +1,10 @@
 from django.shortcuts import get_object_or_404, render
+from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from django.urls import reverse
+from django.core import serializers
 
 # Create your views here.
-from django.http import HttpResponse
-from django.urls import reverse
 from .models import Photo
 from .forms import PhotoForm
 
@@ -10,15 +12,32 @@ def index(request):
     context = {
         'title': 'PhotoLogger',
         'photo': Photo.objects.all(),
-        'form': PhotoForm(request.POST or None)
+        'form': PhotoForm(),
     }
     return render(request, 'photomap/index.html', context)
 
 def upload(request):
-    context = {
-        'title': 'PhotoLogger'
-    }
-    return render(request, 'photomap/index.html', context)
+    if request.method == 'GET':
+        return redirect('photomap:index')
+    elif request.method == 'POST':
+        form = PhotoForm(request.POST, request.FILES)
+        if not form.is_valid():
+            return HttpResponse(form.errors)
+        
+        photo = Photo()
+        photo.latitude = form.cleaned_data['latitude']
+        photo.longtitude = form.cleaned_data['longtitude']
+        if form.cleaned_data['direction']:
+            photo.direction = form.cleaned_data['direction']
+        photo.image = form.cleaned_data['image']
+        photo.save()
+
+        return HttpResponse("Success")
 
 def detail(request, photo_id):
     return HttpResponse("写真の詳細")
+
+def photos(request):
+    data = Photo.objects.all()
+    json_data = serializers.serialize('json', data)
+    return HttpResponse(json_data)

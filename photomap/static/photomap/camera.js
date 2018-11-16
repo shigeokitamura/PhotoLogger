@@ -3,6 +3,7 @@
 const videoElement = document.querySelector('video');
 const videoSelect = document.querySelector('select#videoSource');
 const selectors = [videoSelect];
+
 let imageCapture;
 const button_send = document.querySelector("#button_send");
 const button_capture = document.querySelector("#button_capture");
@@ -74,11 +75,11 @@ function capture() {
     imageCapture.takePhoto()
         .then(blob => createImageBitmap(blob))
         .then(imageBitmap => {
-            const canvas = document.querySelector("#camera_canvas")
+            const canvas = document.querySelector("#camera_canvas");
             drawCanvas(canvas, imageBitmap);
         })
         .catch(error => console.error(error));
-    
+
     button_send.style.visibility = "visible";
     button_capture.style.visibility = "hidden";
     button_recap.style.visibility = "visible";
@@ -102,6 +103,33 @@ function recap() {
     button_send.style.visibility = "hidden";
     button_capture.style.visibility = "visible";
     button_recap.style.visibility = "hidden";
+}
+
+function send() {
+    const form = document.forms.form_upload;
+    console.log(form.action);
+    const formData = new FormData(form);
+    const canvas = document.querySelector("#camera_canvas");
+    canvas.toBlob(blob => {
+        console.log(blob);
+        formData.append("image", blob, "image.jpg");
+        console.log(...formData.entries());
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST" , form.action);
+        xhr.send(formData);
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState == 4) {
+                console.log(xhr.status);
+                console.log(xhr.responseText);
+                if (xhr.responseText == "Success") {
+                    location.reload();
+                } else {
+                    window.alert(xhr.responseText);
+                }
+            }
+        }
+    }, "image/jpeg");
+    
 }
 
 videoSelect.onchange = start;
