@@ -4,10 +4,8 @@ let latitude = 34.8780131;
 let longitude = 135.5766528;
 let direction = -1;
 const zoomLevel = 17;
+const compass_fix = -90;
 
-// const form_latitude = document.querySelector("#id_latitude");
-// const form_longtitude = document.querySelector("#id_longtitude");
-// const form_direction = document.querySelector("#id_direction");
 const static_url = document.querySelector("#static").value;
 
 const defaultIcon = new L.Icon.Default;
@@ -16,16 +14,16 @@ const arrowIcon1 = L.icon({
     iconUrl: `${static_url}photomap/images/arrow1.png`,
     iconRetinaUrl: `${static_url}photomap/images/arrow1.png`,
     iconSize: [25, 50],
-    iconAnchor: [25, 50],
-    popupAnchor: [0, -50],
+    iconAnchor: [12.5, 25],
+    popupAnchor: [-12.5, -25],
 });
 
 const arrowIcon2 = L.icon({
     iconUrl: `${static_url}photomap/images/arrow2.png`,
     iconRetinaUrl: `${static_url}photomap/images/arrow2.png`,
     iconSize: [25, 50],
-    iconAnchor: [25, 50],
-    popupAnchor: [0, -50],
+    iconAnchor: [12.5, 25],
+    popupAnchor: [-12.5, -25],
 });
 
 const map = L.map('map').setView([latitude, longitude], zoomLevel);
@@ -40,7 +38,7 @@ function position_success(e) {
     latitude = e.coords.latitude;
     longitude = e.coords.longitude;
     console.log(e.coords);
-    map.setView([latitude, longitude], zoomLevel);
+    //map.setView([latitude, longitude], zoomLevel);
     location_marker.setLatLng([latitude, longitude]);
 }
 
@@ -57,11 +55,10 @@ const position_options = {
 
 navigator.geolocation.watchPosition(position_success, position_error, position_options);
 
-// Leaflet.Control.Compassを追加
-//map.addControl( new L.Control.Compass( {autoActive: true, showDigit: false} ) );
-
-// map.on('locationfound', onLocationFound);
-// map.on('locationerror', onLocationError);
+// 現在地ボタンを追加
+L.easyButton('fas fa-map-marker', (btn, map) => {
+    map.setView([latitude, longitude], zoomLevel);
+}).addTo(map);
 
 // ジャイロセンサから端末の方角を算出する関数
 function compassHeading(alpha, beta, gamma) {
@@ -92,7 +89,7 @@ function compassHeading(alpha, beta, gamma) {
       compassHeading += 2 * Math.PI;
     }
   
-    return compassHeading * ( 180 / Math.PI ); // Compass Heading (in degrees)
+    return compassHeading * ( 180 / Math.PI ) + compass_fix; // Compass Heading (in degrees)
 }
 
 window.addEventListener('deviceorientation', event => {
@@ -101,7 +98,7 @@ window.addEventListener('deviceorientation', event => {
     } else {
         direction = compassHeading(event.alpha, event.beta, event.gamma);
     }
-    direction = Math.round(heading);
+    direction = Math.round(direction);
     location_marker.setRotationAngle(direction);
 });
 
@@ -116,7 +113,7 @@ function getJSON() {
                 const data = json[item].fields;
                 console.log(data);
                 const marker = L.marker(
-                        [data.latitude, data.longtitude],
+                        [data.latitude, data.longitude],
                         {
                             rotationAngle: data.direction >= 0 ? data.direction : 0,
                             icon: data.direction >= 0 ? arrowIcon1 : defaultIcon

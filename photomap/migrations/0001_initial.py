@@ -15,8 +15,8 @@ class Migration(migrations.Migration):
             name='Photo',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('longtitude', models.FloatField()),
                 ('latitude', models.FloatField()),
+                ('longitude', models.FloatField()),
                 ('direction', models.IntegerField()),
                 ('image', models.ImageField(upload_to='uploads/')),
                 ('date', models.DateTimeField(verbose_name='date uploaded')),

@@ -8,28 +8,81 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <link rel="stylesheet" href="{% static 'photomap/leaflet/leaflet.css' %}" />
         <script src="{% static 'photomap/leaflet/leaflet.js' %}"></script>
-        <!-- <link rel="stylesheet" href="{% static 'photomap/font-awesome/font-awesome.min.css' %}" /> -->
-        <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" /> -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-        <link rel="stylesheet" href="{% static 'photomap/leaflet-locatecontrol/L.Control.Locate.min.css' %}" />
-        <script src="{% static 'photomap/leaflet-locatecontrol/L.Control.Locate.min.js' %}"></script>
-        <link rel="stylesheet" href="{% static 'photomap/leaflet-compass/leaflet-compass.min.css' %}" />
-        <script src="{% static 'photomap/leaflet-compass/leaflet-compass.min.js' %}"></script>
         <script src="{% static 'photomap/leaflet-rotatedmarker/leaflet.rotatedMarker.js' %}"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css">
+        <script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
         <link rel="stylesheet" type="text/css" media="screen" href="{% static 'photomap/style.css' %}" />
+        <style>
+            label {
+                position: absolute;
+                left: 45vw;
+                right: 45vw;
+                bottom: 5vh;
+                text-align: center;
+                color: black;
+                background-color: lightgray;
+                padding: 6px;
+                border-radius: 6px;
+                z-index: 100;
+            }
+        </style>
     </head>
     <body>
         <div id="map"></div>
-        <p id="lat"></p>
-        <p id="lng"></p>
-        <p id="dir"></p>
-        <form action="{% url 'photomap:upload' %}" method="POST" name="form_upload" enctype="multipart/form-data" style="display: none;">
+        <form action="{% url 'photomap:upload' %}" method="POST" name="form_upload" enctype="multipart/form-data">
             {% csrf_token %}
-            {{ form.latitude }}
-            {{ form.longtitude }}
-            {{ form.direction }}
+            <div style="display: none">
+                {{ form.latitude }}
+                {{ form.longitude }}
+                {{ form.direction }}
+            </div>
+            <label for="id_image">
+                <i class="fas fa-camera"></i>
+                {{ form.image }}
+            </label>
         </form>
         <input type="hidden" id="static" value="{% static '' %}">
         <script src="{% static 'photomap/map.js' %}"></script>
+        <script>
+            const input = document.querySelector('#id_image');
+            input.setAttribute("capture", "camera");
+            input.style = "display: none;";
+            input.addEventListener('change', updateImage);
+            function updateImage(e) {
+                const form_latitude = document.querySelector("#id_latitude");
+                const form_longitude = document.querySelector("#id_longitude");
+                const form_direction = document.querySelector("#id_direction");
+                form_latitude.value = latitude;
+                form_longitude.value = longitude;
+                form_direction.value = direction;
+
+                const file = e.target.files;
+                const reader = new FileReader();
+                reader.readAsDataURL(file[0]);
+                console.log(reader);
+                reader.onload = () => {
+                    const img = new Image();
+                    img.src = reader.result;
+                    img.onload = () => {
+                        //console.log(window.innerWidth);
+                        //console.log(img.width, img.height);
+                        const ratio = window.innerWidth / img.width / 2;
+                        const w = img.width * ratio;
+                        const h = img.height * ratio;
+                        //console.log(img.width, img.height);
+                        location_marker.bindPopup(
+                            `<img src=${img.src} width=${w} height=${h}><br>
+                            <center><button onclick="send()">送信</button></center>`
+                        ).openPopup();
+                    }
+                }
+                //location_marker.bindPopup("hoge").openPopup();
+            }
+
+            function send() {
+                document.form_upload.submit();
+            }
+        </script>
     </body>
 </html>

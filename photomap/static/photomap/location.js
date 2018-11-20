@@ -5,7 +5,7 @@ const lng = document.getElementById("lng");
 const dir = document.getElementById("dir");
 
 const form_latitude = document.querySelector("#id_latitude");
-const form_longtitude = document.querySelector("#id_longtitude");
+const form_longitude = document.querySelector("#id_longitude");
 const form_direction = document.querySelector("#id_direction");
 
 const map = L.map('map').setView([34.8780131, 135.5766528], 17);
@@ -34,7 +34,7 @@ function onLocationFound(e) {
     lng.innerText = `経度: ${e.latlng.lng}`;
 
     form_latitude.value = e.latlng.lat;
-    form_longtitude.value = e.latlng.lng;
+    form_longitude.value = e.latlng.lng;
 }
 
 function onLocationError(e) {
@@ -91,7 +91,7 @@ function getJSON() {
                 const data = json[item].fields;
                 console.log(data);
                 const marker = L.marker(
-                        [data.latitude, data.longtitude],
+                        [data.latitude, data.longitude],
                         { rotationAngle: 180 }
                         //{ rotationAngle: data.direction >= 0 ? data.direction : 0 }
                     ).bindPopup(

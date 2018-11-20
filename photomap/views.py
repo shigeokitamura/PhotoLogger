@@ -25,8 +25,8 @@ def upload(request):
             return HttpResponse(form.errors)
         
         photo = Photo()
-        photo.latitude = form.cleaned_data['latitude']
-        photo.longtitude = form.cleaned_data['longtitude']
+        photo.latitude = form.cleaned_data
+        photo.longitude = form.cleaned_data['longitude']
         if form.cleaned_data['direction']:
             photo.direction = form.cleaned_data['direction']
         photo.image = form.cleaned_data['image']

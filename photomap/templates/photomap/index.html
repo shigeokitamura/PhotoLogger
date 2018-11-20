@@ -8,8 +8,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <link rel="stylesheet" href="{% static 'photomap/leaflet/leaflet.css' %}" />
         <script src="{% static 'photomap/leaflet/leaflet.js' %}"></script>
-        <!-- <link rel="stylesheet" href="{% static 'photomap/font-awesome/font-awesome.min.css' %}" /> -->
-        <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" /> -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
         <link rel="stylesheet" href="{% static 'photomap/leaflet-locatecontrol/L.Control.Locate.min.css' %}" />
         <script src="{% static 'photomap/leaflet-locatecontrol/L.Control.Locate.min.js' %}"></script>
@@ -28,7 +26,7 @@
                 <form action="{% url 'photomap:upload' %}" method="POST" name="form_upload" enctype="multipart/form-data" style="display: none;">
                     {% csrf_token %}
                     {{ form.latitude }}
-                    {{ form.longtitude }}
+                    {{ form.longitude }}
                     {{ form.direction }}
                 </form>
                 
