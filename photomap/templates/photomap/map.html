@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% load static %}
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>{{ title }}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <link rel="stylesheet" href="{% static 'photomap/leaflet/leaflet.css' %}" />
+        <script src="{% static 'photomap/leaflet/leaflet.js' %}"></script>
+        <!-- <link rel="stylesheet" href="{% static 'photomap/font-awesome/font-awesome.min.css' %}" /> -->
+        <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" /> -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'photomap/leaflet-locatecontrol/L.Control.Locate.min.css' %}" />
+        <script src="{% static 'photomap/leaflet-locatecontrol/L.Control.Locate.min.js' %}"></script>
+        <link rel="stylesheet" href="{% static 'photomap/leaflet-compass/leaflet-compass.min.css' %}" />
+        <script src="{% static 'photomap/leaflet-compass/leaflet-compass.min.js' %}"></script>
+        <script src="{% static 'photomap/leaflet-rotatedmarker/leaflet.rotatedMarker.js' %}"></script>
+        <link rel="stylesheet" type="text/css" media="screen" href="{% static 'photomap/style.css' %}" />
+    </head>
+    <body>
+        <div id="map"></div>
+        <p id="lat"></p>
+        <p id="lng"></p>
+        <p id="dir"></p>
+        <form action="{% url 'photomap:upload' %}" method="POST" name="form_upload" enctype="multipart/form-data" style="display: none;">
+            {% csrf_token %}
+            {{ form.latitude }}
+            {{ form.longtitude }}
+            {{ form.direction }}
+        </form>
+        <input type="hidden" id="static" value="{% static '' %}">
+        <script src="{% static 'photomap/map.js' %}"></script>
+    </body>
+</html>

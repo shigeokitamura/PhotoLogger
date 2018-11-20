@@ -34,6 +34,14 @@ def upload(request):
 
         return HttpResponse("Success")
 
+def map(request):
+    context = {
+        'title': 'PhotoLogger - Map',
+        'photo': Photo.objects.all(),
+        'form': PhotoForm(),
+    }
+    return render(request, 'photomap/map.html', context)
+
 def detail(request, photo_id):
     return HttpResponse("写真の詳細")
 

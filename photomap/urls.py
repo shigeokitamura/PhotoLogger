@@ -10,4 +10,5 @@ urlpatterns = [
     path('<int:photo_id>/detail/', views.detail, name='detail'),
     path('upload/', views.upload, name='upload'),
     path('photos/', views.photos, name='photos'),
+    path('map/', views.map, name='map'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

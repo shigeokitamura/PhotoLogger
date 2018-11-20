@@ -90,11 +90,8 @@ function getJSON() {
             for (let item in json) {
                 const data = json[item].fields;
                 console.log(data);
-                const marker = L.marker(
-                        [data.latitude, data.longtitude],
-                        { rotationAngle: 180 }
-                        //{ rotationAngle: data.direction >= 0 ? data.direction : 0 }
-                    ).bindPopup(
+                const marker = L.marker([data.latitude, data.longtitude])
+                    .bindPopup(
                         `<img src="media/${data.image}" width= ${window.innerWidth * 0.2} >`
                     ).addTo(map);
             }
