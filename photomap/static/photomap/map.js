@@ -51,7 +51,7 @@ function position_error(e) {
 
 const position_options = {
     enableHighAccuracy: true,
-    timeout: 5000,
+    timeout: 10000,
     maximumAge: 0
 }
 
@@ -101,10 +101,11 @@ window.addEventListener('deviceorientation', event => {
     } else {
         direction = compassHeading(event.alpha, event.beta, event.gamma);
     }
-    dir = Math.round(heading);
-    location_marker.setRotationAngle(dir);
+    direction = Math.round(heading);
+    location_marker.setRotationAngle(direction);
 });
 
+// データベースから写真のデータを取得
 function getJSON() {
     const xhr = new XMLHttpRequest();
     xhr.onreadystatechange = () => {
@@ -121,12 +122,12 @@ function getJSON() {
                             icon: data.direction >= 0 ? arrowIcon1 : defaultIcon
                         }
                     ).bindPopup(
-                        `<img src="/photomap/media/${data.image}" width= ${window.innerWidth * 0.2} >`
+                        `<img src="/photologger/photomap/media/${data.image}" width= ${window.innerWidth * 0.2} >`
                     ).addTo(map);
             }
         }
     }
-    xhr.open('GET', '/photomap/photos/');
+    xhr.open('GET', '/photologger/photomap/photos/');
     xhr.send(null);
 }
 
