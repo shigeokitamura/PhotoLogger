@@ -2,18 +2,7 @@
 <html>
     <head>
         {% load static %}
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>{{ title }}</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <link rel="stylesheet" href="{% static 'photomap/leaflet/leaflet.css' %}" />
-        <script src="{% static 'photomap/leaflet/leaflet.js' %}"></script>
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-        <link rel="stylesheet" href="{% static 'photomap/leaflet-locatecontrol/L.Control.Locate.min.css' %}" />
-        <script src="{% static 'photomap/leaflet-locatecontrol/L.Control.Locate.min.js' %}"></script>
-        <link rel="stylesheet" href="{% static 'photomap/leaflet-compass/leaflet-compass.min.css' %}" />
-        <script src="{% static 'photomap/leaflet-compass/leaflet-compass.min.js' %}"></script>
-        <link rel="stylesheet" type="text/css" media="screen" href="{% static 'photomap/style.css' %}" />
+        {% include 'photomap/header.html' %}
     </head>
     <body>
         <div class="upper">
@@ -31,18 +20,17 @@
                 </form>
                 
                 <button id="button_send"  style="visibility: hidden;" onclick="send()">送信</button>
-                <button id="button_capture" onclick="capture()">📷</button>
+                <button id="button_capture" onclick="capture()"><i class="fas fa-camera"></i></button>
                 <button id="button_recap" style="visibility: hidden;" onclick="recap()">撮り直し</button>
             </div>
             <canvas id="camera_canvas"></canvas>
-            <p id="lat"></p>
-            <p id="lng"></p>
-            <p id="dir"></p>
         </div>
         <div class="lower">
             <div id="map"></div>
+            <a href="{% url 'photomap:map' %}" class="change_button">表示切替</a>
         </div>
+        <input type="hidden" id="static" value="{% static '' %}">
+        <script src="{% static 'photomap/map.js' %}"></script>
         <script src="{% static 'photomap/camera.js' %}"></script>
-        <script src="{% static 'photomap/location.js' %}"></script>
     </body>
 </html>

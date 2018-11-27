@@ -2,34 +2,12 @@
 <html>
     <head>
         {% load static %}
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>{{ title }}</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <link rel="stylesheet" href="{% static 'photomap/leaflet/leaflet.css' %}" />
-        <script src="{% static 'photomap/leaflet/leaflet.js' %}"></script>
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-        <script src="{% static 'photomap/leaflet-rotatedmarker/leaflet.rotatedMarker.js' %}"></script>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css">
-        <script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
-        <link rel="stylesheet" type="text/css" media="screen" href="{% static 'photomap/style.css' %}" />
-        <style>
-            label {
-                position: absolute;
-                left: 45vw;
-                right: 45vw;
-                bottom: 5vh;
-                text-align: center;
-                color: black;
-                background-color: lightgray;
-                padding: 6px;
-                border-radius: 6px;
-                z-index: 100;
-            }
-        </style>
+        {% include 'photomap/header.html' %}
     </head>
     <body>
         <div id="map"></div>
+        <a href="{% url 'photomap:index' %}" class="change_button">表示切替</a>
+
         <form action="{% url 'photomap:upload' %}" method="POST" name="form_upload" enctype="multipart/form-data">
             {% csrf_token %}
             <div style="display: none">
@@ -37,7 +15,7 @@
                 {{ form.longitude }}
                 {{ form.direction }}
             </div>
-            <label for="id_image">
+            <label for="id_image" class="label_button">
                 <i class="fas fa-camera"></i>
                 {{ form.image }}
             </label>
@@ -77,11 +55,39 @@
                         ).openPopup();
                     }
                 }
-                //location_marker.bindPopup("hoge").openPopup();
             }
 
             function send() {
-                document.form_upload.submit();
+                //document.form_upload.submit();
+                const form = document.forms.form_upload;
+                const formData = new FormData(form);
+                console.log(...formData.entries());
+                const xhr = new XMLHttpRequest();
+                xhr.open("POST", form.action);
+                xhr.send(formData);
+                xhr.onreadystatechange = () => {
+                    if (xhr.readyState == 4) {
+                        if (xhr.responseText == "Success") {
+                            location.reload();
+                        } else {
+                            window.alert(xhr.responseText);
+                        }
+                    }
+                }
+            }
+
+            if (window.requestIdleCallback) {
+                requestIdleCallback(function () {
+                    Fingerprint2.get(function (components) {
+                    console.log(components) // an array of components: {key: ..., value: ...}
+                    })
+                })
+            } else {
+                setTimeout(function () {
+                    Fingerprint2.get(function (components) {
+                    console.log(components) // an array of components: {key: ..., value: ...}
+                    })  
+                }, 500)
             }
         </script>
     </body>

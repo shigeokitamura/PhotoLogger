@@ -18,27 +18,25 @@ body {
 #local_video {
     position: absolute;
     top: 0;
-    left: 0;
-    right: 0;
+    left: 50%;
+    -webkit-transform: translate(-50%, 0);
+    -moz-transform: translate(-50%, 0);
+    -ms-transform: translate(-50%, 0);
+    -o-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
     height: 50vh;
-    width: 100vw;
     z-index: -100;
-    margin: 0 auto;
 }
 
 #camera_canvas {
     position: absolute;
     top: 0;
     left: 0;
-    right: 0;
-    height: 50vh;
-    width: 100vw;
-    z-index: -100;
-    margin: 0 auto;
+    z-index: -50;
 }
 
 .select {
-    z-index: 0;
+    z-index: 100;
 }
 
 .camera_button {
@@ -47,10 +45,37 @@ body {
     left: 0;
     right: 0;
     text-align: center;
+    z-index: 100;
+}
+
+.change_button {
+    position: fixed;
+    left: 5vw;
+    bottom: 5vw;
+    text-align: center;
+    color: black;
+    background-color: lightgray;
+    text-decoration: none;
+    padding: 6px;
+    border-radius: 6px;
+    z-index: 100;
 }
 
 #map {
     height: 100%;
     width: 100%;
     z-index: 0;
+}
+
+.label_button {
+    position: absolute;
+    left: 45vw;
+    right: 45vw;
+    bottom: 5vh;
+    text-align: center;
+    color: black;
+    background-color: lightgray;
+    padding: 6px;
+    border-radius: 6px;
+    z-index: 100;
 }
