@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{% static 'admin/css/base.css' %}" />
+        <link rel="stylesheet" href="{% static 'admin/css/login.css' %}" />
+        <link rel="stylesheet" href="{% static 'admin/css/responsive.css' %}">
+        <title>PhotoLogger - Login</title>
+    </head>
+    <body class="login" data-admin-utc-offset="32400">
+        <div id="container">
+            <div id="header">
+                <div id="branding">
+                    <h1 id="site-name">
+                        PhotoLogger Account
+                    </h1>
+                </div>
+            </div>
+            <div id="content" class="coIM">
+                <div id="content-main">
+                    {% if form.errors %}
+                    <p style="color:red;">ユーザ名とパスワードが一致しません．</p>
+                    {% endif %}
+                    
+                    {% if next %}
+                        {% if user.is_authenticated %}
+                        <p>Your account doesn't have access to this page. To proceed,
+                        please login with an account that has access.</p>
+                        {% else %}
+                        <p>Please login to see this page.</p>
+                        {% endif %}
+                    {% endif %}
+                    
+                    <form method="post" action="{% url 'login' %}">
+                        {% csrf_token %}
+                        <div class="form-row">
+                            {{ form.username.label_tag }}
+                            {{ form.username }}
+                        </div>
+                        <div class="form-row">
+                            {{ form.password.label_tag }}
+                            {{ form.password }}
+                        </div>
+                        <div class="submit-row">
+                            <input type="submit" value="login" />
+                            <input type="hidden" name="next" value="{{ next }}" />
+                        </div>
+                    </form>
+                    
+                    <p><a href="{% url 'accounts:signup' %}">新規登録</a></p>
+                    <p><a href="{% url 'password_reset' %}">パスワードを忘れた</a></p>
+                </div>
+                <br class="clear">
+            </div>
+        </div>
+    </body>
+</html>
+
+
+
+

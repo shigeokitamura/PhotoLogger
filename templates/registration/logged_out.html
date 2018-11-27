@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{% static 'admin/css/base.css' %}" />
+        <link rel="stylesheet" href="{% static 'admin/css/login.css' %}" />
+        <link rel="stylesheet" href="{% static 'admin/css/responsive.css' %}">
+        <title>PhotoLogger - Logout</title>
+    </head>
+    <body class="login" data-admin-utc-offset="32400">
+        <div id="container">
+            <div id="header">
+                <div id="branding">
+                    <h1 id="site-name">
+                        PhotoLogger Account
+                    </h1>
+                </div>
+            </div>
+            <div id="content" class="coIM">
+                <div id="content-main">
+                    <h1>ログアウトしました</h1>
+                    <p>
+                        <a href="{% url 'login' %}">別のアカウントでログイン</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{% static 'admin/css/base.css' %}" />
+        <link rel="stylesheet" href="{% static 'admin/css/login.css' %}" />
+        <link rel="stylesheet" href="{% static 'admin/css/responsive.css' %}">
+        <title>PhotoLogger - Signup</title>
+    </head>
+</html>
+<body class="login" data-admin-utc-offset="32400">
+    <div id="container">
+        <div id="header">
+            <div id="branding">
+                <h1 id="site-name">
+                    PhotoLogger Account
+                </h1>
+            </div>
+        </div>
+        <div id="content" class="coIM">
+            <div id="content-main">
+                <form method="POST">
+                    {% csrf_token %}
+                    {% for f in form %}
+                        <div class="form-row">
+                            {{ f.label_tag }}
+                            {{ f }}
+                            {{ f.help_text }}
+                        </div>
+                    {% endfor %}
+                    <div class="submit-row">
+                        <input type="submit" value="Sign up" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+</body>
