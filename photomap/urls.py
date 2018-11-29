@@ -6,7 +6,7 @@ from . import views
 
 app_name = 'photomap'
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('camera/', views.camera, name='camera'),
     path('<int:photo_id>/detail/', views.detail, name='detail'),
     path('upload/', views.upload, name='upload'),
     path('photos/', views.photos, name='photos'),

@@ -59,6 +59,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.template.context_processors.media',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -114,12 +115,16 @@ USE_L10N = True
 
 USE_TZ = True
 
+ROOT_URL = '/photologger/'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATIC_URL = '/photologger/static/'
+STATIC_URL = ROOT_URL + 'static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
+MEDIA_URL = ROOT_URL + 'media/'
+
+LOGIN_URL = ROOT_URL + 'accounts/login/'
+LOGIN_REDIRECT_URL = ROOT_URL

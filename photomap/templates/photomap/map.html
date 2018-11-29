@@ -6,7 +6,14 @@
     </head>
     <body>
         <div id="map"></div>
-        <a href="{% url 'photomap:index' %}" class="change_button">表示切替</a>
+        <div id="logout">
+            <div id="username">{{ user.username }}</div>
+            <a href="{% url 'logout'%}" class="button">ログアウト</a>
+        </div>
+        
+        <div id="change_button">
+            <a href="{% url 'photomap:camera' %}" class="button">表示切替</a>
+        </div>
 
         <form action="{% url 'photomap:upload' %}" method="POST" name="form_upload" enctype="multipart/form-data">
             {% csrf_token %}
@@ -14,13 +21,17 @@
                 {{ form.latitude }}
                 {{ form.longitude }}
                 {{ form.direction }}
+                {{ form.photoby }}
             </div>
-            <label for="id_image" class="label_button">
-                <i class="fas fa-camera"></i>
-                {{ form.image }}
-            </label>
+            <div id="label_button">
+                <label for="id_image" class="button">
+                    <i class="fas fa-camera"></i>
+                    {{ form.image }}
+                </label>
+            </div>
         </form>
         <input type="hidden" id="static" value="{% static '' %}">
+        <input type="hidden" id="media" value="{{ MEDIA_URL }}">
         <script src="{% static 'photomap/map.js' %}"></script>
         <script>
             const input = document.querySelector('#id_image');
@@ -31,9 +42,11 @@
                 const form_latitude = document.querySelector("#id_latitude");
                 const form_longitude = document.querySelector("#id_longitude");
                 const form_direction = document.querySelector("#id_direction");
+                const form_photoby = document.querySelector("#id_photoby");
                 form_latitude.value = latitude;
                 form_longitude.value = longitude;
                 form_direction.value = direction;
+                form_photoby.value = document.querySelector("#username").innerHTML;
 
                 const file = e.target.files;
                 const reader = new FileReader();

@@ -6,6 +6,10 @@
     </head>
     <body>
         <div class="upper">
+            <div id="logout">
+                <div id="username">{{ user.username }}</div>
+                <a href="{% url 'logout'%}" class="button">ログアウト</a>
+            </div>
             <video id="local_video" playsinline muted autoplay></video>
             <div class="select">
                 <label for="videoSource">Video source: </label>
@@ -17,6 +21,7 @@
                     {{ form.latitude }}
                     {{ form.longitude }}
                     {{ form.direction }}
+                    {{ form.photoby }}
                 </form>
                 
                 <button id="button_send"  style="visibility: hidden;" onclick="send()">送信</button>
@@ -27,9 +32,12 @@
         </div>
         <div class="lower">
             <div id="map"></div>
-            <a href="{% url 'photomap:map' %}" class="change_button">表示切替</a>
+            <div id="change_button">
+                <a href="{% url 'photomap:map' %}" class="button">表示切替</a>
+            </div>
         </div>
         <input type="hidden" id="static" value="{% static '' %}">
+        <input type="hidden" id="media" value="{{ MEDIA_URL }}">
         <script src="{% static 'photomap/map.js' %}"></script>
         <script src="{% static 'photomap/camera.js' %}"></script>
     </body>

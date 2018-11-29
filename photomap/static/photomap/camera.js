@@ -110,9 +110,11 @@ function setFormData() {
     const form_latitude = document.querySelector('#id_latitude');
     const form_longitude = document.querySelector('#id_longitude');
     const form_direction = document.querySelector('#id_direction');
+    const form_photoby = document.querySelector('#id_photoby');
     form_latitude.value = latitude;
     form_longitude.value = longitude;
     form_direction.value = direction;
+    form_photoby.value = document.querySelector('#username').innerHTML;
 }
 
 function drawCanvas(canvas, img) {

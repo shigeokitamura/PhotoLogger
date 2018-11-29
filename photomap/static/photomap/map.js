@@ -7,6 +7,7 @@ const zoomLevel = 17;        // 地図のズームレベル
 let compass_fix = 0;         // 方位の補正
 
 const static_url = document.querySelector("#static").value;
+const media_url = document.querySelector("#media").value;
 
 const defaultIcon = new L.Icon.Default;
 
@@ -129,12 +130,12 @@ function getJSON() {
                             icon: data.direction >= 0 ? arrowIcon1 : defaultIcon
                         }
                     ).bindPopup(
-                        `<img src="/photologger/photomap/media/${data.image}" width= ${window.innerWidth * 0.2} >`
+                        `<img src="${media_url}${data.image}" width= ${window.innerWidth * 0.2} >`
                     ).addTo(map);
             }
         }
     }
-    xhr.open('GET', '/photologger/photomap/photos/');
+    xhr.open('GET', '../photos/');
     xhr.send(null);
 }
 
