@@ -16,12 +16,12 @@ class Migration(migrations.Migration):
             name='photoby',
             field=models.CharField(default='null', max_length=150),
         ),
-        migrations.AlterField(
+        migrations.AddField(
             model_name='photo',
             name='date',
             field=models.DateTimeField(default=django.utils.timezone.now),
         ),
-        migrations.AlterField(
+        migrations.AddField(
             model_name='photo',
             name='direction',
             field=models.IntegerField(default=-1),

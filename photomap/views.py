@@ -33,6 +33,7 @@ def upload(request):
         if form.cleaned_data['direction']:
             photo.direction = form.cleaned_data['direction']
         photo.image = form.cleaned_data['image']
+        photo.photoby = form.cleaned_data['photoby']
         photo.save()
 
         return HttpResponse("Success")
