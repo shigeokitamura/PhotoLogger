@@ -1,13 +1,15 @@
 # PhotoLogger
 スマートフォンで撮影した写真の位置と方位を記録できるWebアプリ
 
-# Requirements
+# How to Use
+## Initialize
 ```
-Python 3.6.7
-Django 2.2.1
+$ pip install -r requirements.txt
+$ python manage.py migrate
+$ python manage.py createsuperuser --username=admin
 ```
 
-# How to Use
+## Run
 ```
 $ python manage.py runserver
 ```
